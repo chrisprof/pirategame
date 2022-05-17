@@ -1,0 +1,45 @@
+
+#gameCanvas{
+	border-radius: 5%;
+	background-color:rgb(88, 114, 164);
+}
+
+#gameDiv{
+	height:100%;
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+}
+p{
+	font-family: monospace;
+	font-size: 30px;
+	color:white;
+	font-weight: 600;
+}
+h1{
+	font-family: monospace;
+	font-size:65px;
+	color:#ffffff;
+}
+
+body{
+	background-color:#2d2778;
+	word-wrap:break-word;
+	text-align: center;
+	margin:0%;
+}
+
+#mainDiv{
+	display:flex;
+	flex-direction: column;
+	justify-content:center;
+}
+
+footer{
+	background-color: #131047;
+	margin-top:5%;
+	color:white;
+	font-family: monospace;
+	position:absolute;
+	width:100%;
+}
