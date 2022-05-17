@@ -16,8 +16,9 @@ function rndmNum(max) {
 //Creates game objects
 class gameObject
 {
-	constructor(x,y,width,height,color,speedValue,xspeed,yspeed,health,damage,render)
+	constructor(img,x,y,width,height,color,speedValue,xspeed,yspeed,health,damage,render)
 	{
+		this.img = img;
 		this.x = x;
 		this.y = y;
 		this.width= width;
@@ -46,7 +47,12 @@ class gameObject
 	draw(ctx)
 	{
 		ctx.fillStyle=this.color;
-		ctx.fillRect(this.x,this.y,this.width,this.height);
+		if(!this.img)
+		{
+			ctx.fillRect(this.x,this.y,this.width,this.height);
+			return;
+		}
+		ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
 	}
 
 	goto(obj)
@@ -118,7 +124,7 @@ class gameObject
 		if(this.render==true)
 		{
 			this.move();
-			this.runFriction();
+			this.runFriction(friction);
 			this.collisionCheck();
 			this.draw(ctx);
 		}
@@ -137,22 +143,6 @@ class gameObject
 		}
 	}
 
-}
-
-class imgGameObject extends gameObject
-{
-	constructor()
-	{
-		super()
-	}
-
-	
-	draw(ctx)
-	{
-		ctx.fillStyle=this.color;
-		ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
-		super.draw(ctx);
-	}
 }
 
 function getDistance(obj1,obj2)
@@ -176,9 +166,9 @@ function hit()
 	}
 }
 
-let plr = new imgGameObject(cannon,width/2,height/2,80,80,5,0,0,0.9,100,undefined,true);
-let proj = new gameObject(undefined,0,0,10,10,"#ffd23d",10,0,0,0.5,undefined,5,false);
-let enemy = new imgGameObject(boat,width/2,40,150,150,10,0,0,0.5,500,5,true);
+let plr = new gameObject(cannon,width/2,height/2,80,80,undefined,5,0,0,100,undefined,true);
+let proj = new gameObject(undefined,0,0,10,10,"#ffd23d",10,0,0,undefined,5,false);
+let enemy = new gameObject(boat,width/2,40,150,150,undefined,10,0,0,500,5,true);
 
 moveLoop = setInterval(()=>{enemy.rndmMove()},500);
 
@@ -188,8 +178,6 @@ function render()
 	plr.update();
 	proj.update();
 	enemy.update();
-
-	enemy.isDead("You win! The ship has sunken!");
 
 	if(hit())
 	{
